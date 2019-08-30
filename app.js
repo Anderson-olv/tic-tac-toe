@@ -1,3 +1,5 @@
+// teste
+
 const mostrador = document.getElementById('display');
 const posicoes = document.getElementsByClassName('slot');
 let jogoEstaAcontecendo = true;
@@ -12,7 +14,7 @@ const posicoesJaJogadas = [];
 
 const removerEscutadorDeEventos = () => {
 	Array.from(posicoes).forEach(elementoAtual => {
-		elementoAtual.removeEventListener('click', () => {}, false);
+		elementoAtual.removeEventListener('click', () => { }, false);
 	});
 };
 
@@ -28,18 +30,20 @@ const comecarJogo = () => {
 				posicaoAtual.innerHTML += `<button class="action">${jogadorAtual}</button>`;
 				jogadorAtual = inverterJogador();
 				mostrador.innerText = jogadorAtual;
+				requestAnimationFrame(() => {
+					jogoEstaAcontecendo = posicoesJaJogadas.length <= 8;
+
+					if (!jogoEstaAcontecendo) {
+						removerEscutadorDeEventos();
+						setTimeout(() => alert("Fim de jogo!"), 0);
+						window.location.reload();
+					}
+
+					console.log(posicoesJaJogadas)
+				})
 			} else {
-				alert('Posição invalida!')
+				alert('Posição inválida!')
 			}
-
-			jogoEstaAcontecendo = posicoesJaJogadas.length < 9;
-
-			if(!jogoEstaAcontecendo) {
-				removerEscutadorDeEventos();
-				alert("Fim de jogo!");
-			}
-
-			console.log(posicoesJaJogadas)
 		});
 	};
 };
